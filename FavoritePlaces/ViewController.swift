@@ -15,6 +15,7 @@ protocol ViewControllerDelegate {
 }
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
+    @IBOutlet var instructionLabel: UILabel!
     @IBOutlet var map: MKMapView!
     var delegate: ViewControllerDelegate?
     var manager = CLLocationManager()
@@ -22,17 +23,43 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     var myPath: [CLLocation] = []
     var userLocation = CLLocation()
     var savedAnnotations: [MKAnnotation] = []
+    var isTracking:Bool? = nil
+    var selectedRow:Int? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
+    }
+    override func viewWillDisappear(animated: Bool) {
         
     }
     override func viewDidAppear(animated: Bool) {
+        
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.requestWhenInUseAuthorization()
-        manager.startUpdatingLocation()
         manager.delegate = self
+        
+        
+        if(isTracking == true)
+        {
+            instructionLabel.hidden = false
+            manager.startUpdatingLocation()
+        }
+        else if isTracking == false && selectedRow != nil
+        {
+            let selectedItem:Favorite = myFavorites[selectedRow!]
+            let latitude:CLLocationDegrees = selectedItem.location.coordinate.latitude
+            let longtitude:CLLocationDegrees = selectedItem.location.coordinate.longitude
+            let latDel:CLLocationDegrees = 0.003
+            let longDel:CLLocationDegrees = 0.003
+            let span = MKCoordinateSpanMake(latDel, longDel)
+            let location = CLLocationCoordinate2DMake(latitude, longtitude)
+            let region = MKCoordinateRegionMake(location, span)
+            
+            instructionLabel.hidden = true
+            self.map.setRegion(region, animated: true)
+        }
         
         map.delegate = self
         map.showsUserLocation = true
@@ -44,7 +71,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         map.addGestureRecognizer(doubleTap)
 
         if savedAnnotations.count > 0{
-            print("worked")
+         
             for point in savedAnnotations{
                 map.addAnnotation(point)
             }

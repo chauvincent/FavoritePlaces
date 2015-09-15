@@ -19,16 +19,25 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="KCa-cM-Z0H">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                             </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Double-Tap to Save A Favorite Location" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mK2-6R-cD9">
+                                <rect key="frame" x="154" y="72" width="312" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="KCa-cM-Z0H" secondAttribute="trailing" id="7vu-mP-uXb"/>
+                            <constraint firstItem="mK2-6R-cD9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="GN4-7a-h3n"/>
                             <constraint firstItem="KCa-cM-Z0H" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ZrC-mF-Vvi"/>
                             <constraint firstItem="KCa-cM-Z0H" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="cmp-Uy-FZC"/>
+                            <constraint firstItem="mK2-6R-cD9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gTD-EI-6Sr"/>
                             <constraint firstItem="KCa-cM-Z0H" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="yft-ar-9z4"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="instructionLabel" destination="mK2-6R-cD9" id="Onk-wJ-fDd"/>
                         <outlet property="map" destination="KCa-cM-Z0H" id="1Bd-IG-y5e"/>
                     </connections>
                 </viewController>

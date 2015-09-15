@@ -13,6 +13,7 @@ class TableViewController: UITableViewController, ViewControllerDelegate {
     
     var myFavorites: [Favorite] = []
     var myAnnotatons: [MKAnnotation] = []
+    var selectedPath = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +58,7 @@ class TableViewController: UITableViewController, ViewControllerDelegate {
         return cell
     }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        selectedPath = indexPath.row
     }
     
     
@@ -112,14 +113,19 @@ class TableViewController: UITableViewController, ViewControllerDelegate {
         // Pass the selected object to the new view controller.
         if segue.identifier == "TableViewToViewSegue"{
             let nextViewController = segue.destinationViewController as! ViewController
-           nextViewController.delegate = self
+            nextViewController.delegate = self
             nextViewController.savedAnnotations = self.myAnnotatons
             nextViewController.myFavorites = self.myFavorites
+            nextViewController.isTracking = true
         }
         
         if segue.identifier == "CellToMapSegue"{
-            
-        
+            let nextViewController = segue.destinationViewController as! ViewController
+            nextViewController.delegate = self
+            nextViewController.isTracking = false
+            nextViewController.selectedRow = selectedPath
+            nextViewController.myFavorites = self.myFavorites
+            nextViewController.savedAnnotations = self.myAnnotatons
         }
     }
 }
